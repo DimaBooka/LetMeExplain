@@ -1,2 +1,35 @@
-<button routerLink="../">back</button>
-<p>create-explanation works!</p>
+<div class="editor-options">
+  <button routerLink="../">back</button>
+  <div class="select-color" *ngFor="let color of colors"
+       [class.active]="color === lastSelectedColor"
+       [style.background-color]="color"
+       (click)="onSetColor(color)"
+  ></div>
+
+  <button (click)="onClear()" class="danger">Clear</button>
+
+  <div class="buttons-group">
+    <button (click)="onNextSlide()">Next</button>
+    <button (click)="onNextSlide(true)">empty</button>
+  </div>
+
+  <div class="buttons-group" *ngFor="let slide of slides; let i = index">
+    <button
+      [class.active]="i === currentSlideIndex"
+      (click)="onChangeSlide(i)"
+    >{{ slide.name }}</button>
+
+    <button
+      [class.active]="i === currentSlideIndex"
+      (click)="onRemoveSlide(i)"
+    >x</button>
+  </div>
+
+  <button (click)="onDone()">Done</button>
+</div>
+
+<canvas #editor
+  (document:mousemove)="onMouseMove($event)"
+  (document:mousedown)="onMouseDown()"
+  (document:mouseup)="onMouseUp()"
+></canvas>
