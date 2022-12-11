@@ -25,7 +25,8 @@
     >x</button>
   </div>
 
-  <button (click)="onDone()">Done</button>
+  <button (click)="onDownload()">Done</button>
+  <app-upload-file (fileUpload)="onUpload($event)" [small]="true"></app-upload-file>
 </div>
 
 <canvas #editor

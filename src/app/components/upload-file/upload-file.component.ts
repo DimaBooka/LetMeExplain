@@ -1,4 +1,4 @@
-import { Component, ElementRef, EventEmitter, Output, ViewChild } from '@angular/core'
+import { Component, ElementRef, EventEmitter, Input, Output, ViewChild } from '@angular/core'
 
 @Component({
   selector: 'app-upload-file',
@@ -8,6 +8,7 @@ import { Component, ElementRef, EventEmitter, Output, ViewChild } from '@angular
 export class UploadFileComponent {
   @ViewChild("fileDropRef", { static: false }) fileDropEl?: ElementRef;
 
+  @Input() small = false
   @Output() fileUpload: EventEmitter<File> = new EventEmitter<File>()
 
   /**

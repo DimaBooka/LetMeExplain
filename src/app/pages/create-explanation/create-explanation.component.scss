@@ -1,3 +1,5 @@
+@import "../../../constants";
+
 :host {
   position: relative;
   width: 100vw;
@@ -23,7 +25,7 @@
     height: 30px;
     width: 30px;
     border-radius: 50%;
-    border: 3px solid rgb(214, 214, 214);
+    border: 3px solid $selectColor;
     transition: all .5s;
     opacity: .3;
 
@@ -37,6 +39,7 @@
   }
 
   canvas {
+    background-color: $backgroundColor;
     position: fixed;
     left: 0;
     top: 0;

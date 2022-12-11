@@ -6,6 +6,7 @@ import {
   ElementRef,
   ViewChild
 } from '@angular/core'
+import { retry } from 'rxjs'
 
 @Component({
   selector: 'app-create-explanation',
@@ -47,22 +48,23 @@ export class CreateExplanationComponent implements AfterViewInit {
 
     this.prevX = currentX
     this.prevY = currentY
-    this.ref.markForCheck()
+    this.cdr.markForCheck()
   }
 
   colors: string[] = [
     '#fff',
-    '#EF626C',
-    '#fdec03',
-    '#24d102',
-    '#000'
+    '#03bb56',
+    '#fd7200',
+    '#fa2c11',
+    '#000',
+    '#2b2b2b'
   ]
   lastSelectedColor: string = this.colors[0]
 
   slides: { name: string, dataURL: string}[] = [{ name: 'Slide #1', dataURL: '' }]
   currentSlideIndex = 0
 
-  constructor(private ref: ChangeDetectorRef) {}
+  constructor(private cdr: ChangeDetectorRef) {}
 
   ngAfterViewInit() {
     if (!this.editor) {
@@ -73,6 +75,7 @@ export class CreateExplanationComponent implements AfterViewInit {
     this.editor.nativeElement.width = window.innerWidth
 
     this.editorContext = this.editor.nativeElement.getContext('2d')
+    this.onSetColor(this.colors[0])
     this.onSetLineWidth(5)
 
     if (!this.editorContext) {
@@ -80,7 +83,7 @@ export class CreateExplanationComponent implements AfterViewInit {
     }
     this.editorContext.lineCap = "round"
 
-    this.ref.detectChanges()
+    this.cdr.detectChanges()
   }
 
   onSetLineWidth(width: number) {
@@ -88,7 +91,7 @@ export class CreateExplanationComponent implements AfterViewInit {
       return
     }
     this.editorContext.lineWidth = width
-    this.ref.markForCheck()
+    this.cdr.markForCheck()
   }
 
   onSetColor(color: string) {
@@ -97,7 +100,11 @@ export class CreateExplanationComponent implements AfterViewInit {
     }
     this.lastSelectedColor = color
     this.editorContext.strokeStyle = color
-    this.ref.markForCheck()
+
+    // for eraser let's use bigger radius
+    this.onSetLineWidth(this.colors[this.colors.length - 1] === color ? 15 : 5)
+
+    this.cdr.markForCheck()
   }
 
   onClear() {
@@ -105,7 +112,7 @@ export class CreateExplanationComponent implements AfterViewInit {
       return
     }
     this.editorContext?.clearRect(0, 0, this.editor.nativeElement.width, this.editor.nativeElement.height)
-    this.ref.markForCheck()
+    this.cdr.markForCheck()
   }
 
   onChangeSlide(index: number) {
@@ -130,7 +137,7 @@ export class CreateExplanationComponent implements AfterViewInit {
     }
     this.slides.push({ name: `Slide #${this.slides.length + 1}`, dataURL: '' })
     this.currentSlideIndex = this.slides.length - 1
-    this.ref.markForCheck()
+    this.cdr.markForCheck()
   }
 
   onRemoveSlide(index: number) {
@@ -160,7 +167,7 @@ export class CreateExplanationComponent implements AfterViewInit {
       this.currentSlideIndex -= this.currentSlideIndex > index ? 1 : 0
     }
 
-    this.ref.markForCheck()
+    this.cdr.markForCheck()
   }
 
   drawSlide(index: number) {
@@ -173,23 +180,54 @@ export class CreateExplanationComponent implements AfterViewInit {
       this.editorContext?.drawImage(img, 0, 0)
     }
     img.src = slide.dataURL
-    this.ref.markForCheck()
+    this.cdr.markForCheck()
   }
 
-  onDone() {
+  onDownload() {
     if (!this.editor) {
       return
     }
 
     this.slides[this.currentSlideIndex].dataURL = this.editor.nativeElement.toDataURL('imag/png')
 
-    const data = this.slides.map(s => s.dataURL).map((s, i) => `${i > 0 ? ' \n---\n' : ''}![image](${s})\n`).join('')
+    const data = this.slides.map(s => s.dataURL).map((s, i) => `${i > 0 ? '---\n' : ''}![image](${s})\n`).join('')
 
     let a = document.createElement('a')
     a.href = 'data:text/plain;charset=utf-8,' + encodeURIComponent(data)
     a.download = 'explanation.md'
     a.click()
 
-    this.ref.markForCheck()
+    this.cdr.markForCheck()
+  }
+
+  onUpload(uploadedFile: File) {
+    const reader = new FileReader()
+    reader.readAsText(uploadedFile, 'UTF-8')
+    reader.onload = (e) => {
+      const fileContent = <string>e.target?.result
+
+      try {
+        // split content to slides
+        const slides = fileContent.split('---').map((s, i) => {
+          const slide = s.replace(/\n/g,'')
+          return { name: `Slide #${i + 1}`, dataURL: slide.substring(9, slide.length - 2) }
+        })
+
+        this.slides = slides
+
+        // open first slide
+        this.drawSlide(0)
+
+      } catch (e) {
+        // show incorrect format error
+        // this.cdr.markForCheck()
+      }
+
+      this.cdr.markForCheck()
+    }
+    reader.onerror = (e) => {
+      // show incorrect format error
+      // this.cdr.markForCheck()
+    }
   }
 }

@@ -32,10 +32,10 @@
             "styles": [
               "src/styles.scss",
               "node_modules/reveal.js/dist/reveal.css",
-              "node_modules/reveal.js/dist/theme/white.css"
+              "node_modules/reveal.js/dist/theme/league.css"
             ],
             "scripts": [
-              "node_modules/reveal.js/js/index.js"
+              "node_modules/reveal.js/dist/reveal.js"
             ]
           },
           "configurations": {
