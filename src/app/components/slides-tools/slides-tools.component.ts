@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { SlidesService } from '../../services/slides.service'
 
 @Component({
   selector: 'app-slides-tools',
@@ -6,5 +7,5 @@ import { Component } from '@angular/core';
   styleUrls: ['./slides-tools.component.scss']
 })
 export class SlidesToolsComponent {
-
+  constructor(public slidesService: SlidesService) {}
 }

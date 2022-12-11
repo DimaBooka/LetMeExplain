@@ -9,5 +9,10 @@
     label {
       position: absolute;
     }
+
+    &.small {
+      width: 94px;
+      height: 34px;
+    }
   }
 }

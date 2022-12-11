@@ -55,20 +55,12 @@ button, .as-button {
   justify-content: center;
 
   button {
-    margin: 0!important;
-
     &:hover {
-      filter: brightness(95%);
+      //filter: brightness(95%);
     }
 
     &:first-of-type {
-      border-top-right-radius: 0;
-      border-bottom-right-radius: 0;
-    }
-
-    &:last-of-type {
-      border-top-left-radius: 0;
-      border-bottom-left-radius: 0;
+      margin-right: 10px;
     }
   }
 }

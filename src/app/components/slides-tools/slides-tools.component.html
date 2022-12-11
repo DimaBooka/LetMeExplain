@@ -1,1 +1,23 @@
-<p>slides-tools works!</p>
+<button (click)="slidesService.onClear()" class="danger small">Clear</button>
+
+<div class="buttons-group">
+  <button class="small" (click)="slidesService.onNextSlide()">Next</button>
+  <button class="small" (click)="slidesService.onNextSlide(true)">empty</button>
+</div>
+
+<div class="buttons-group" *ngFor="let slide of slidesService.slides; let i = index">
+  <button
+    class="small"
+    [class.active]="i === slidesService.currentSlideIndex"
+    (click)="slidesService.onChangeSlide(i)"
+  >Slide #{{ i + 1 }}</button>
+
+  <button
+    class="small"
+    [class.active]="i === slidesService.currentSlideIndex"
+    (click)="slidesService.onRemoveSlide(i)"
+  >x</button>
+</div>
+
+<button class="small active" (click)="slidesService.onDownload()">Done</button>
+<app-upload-file (fileContent)="slidesService.onUpload($event)" [small]="true"></app-upload-file>

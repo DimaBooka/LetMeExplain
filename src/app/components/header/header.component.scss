@@ -3,6 +3,8 @@
 $sideWidth: 20px;
 
 :host {
+  z-index: 10;
+
   header {
     display: flex;
     align-items: center;
@@ -21,6 +23,9 @@ $sideWidth: 20px;
     }
 
     .tools {
+      display: flex;
+      align-items: center;
+      justify-content: center;
       margin: 0;
       user-select: none;
       transition: all 0.5s;
@@ -42,7 +47,11 @@ $sideWidth: 20px;
       }
 
       .tools {
-        transform: translateX(calc(-100vw + 112px));
+        transform: translateX(calc(-43vw + 24px));
+
+        app-slides-tools {
+          margin-left: 50px;
+        }
       }
     }
 
@@ -52,7 +61,7 @@ $sideWidth: 20px;
       }
 
       .tools {
-        transform: translateX(calc(-100vw + 112px));
+        transform: translateX(calc(-100vw + 114px));
       }
     }
   }

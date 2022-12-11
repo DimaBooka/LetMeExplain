@@ -72,7 +72,7 @@ export class ViewExplanationComponent implements AfterViewInit, OnDestroy {
   }
 
   onFileUpload(fileContent: string) {
-    this.slidesService.uploadSlides(fileContent)
+    this.slidesService.parseSlides(fileContent)
     if (this.slidesService.slides.length) {
       this.initPresentation()
     }

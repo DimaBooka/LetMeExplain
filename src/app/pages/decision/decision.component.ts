@@ -12,7 +12,7 @@ export class DecisionComponent {
   constructor(private slidesService: SlidesService, private router: Router) {}
 
   onFileUpload(fileContent: string) {
-    this.slidesService.uploadSlides(fileContent)
+    this.slidesService.parseSlides(fileContent)
     this.router.navigate(['/view'])
   }
 }
