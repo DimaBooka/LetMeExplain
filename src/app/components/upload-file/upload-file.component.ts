@@ -9,7 +9,7 @@ export class UploadFileComponent {
   @ViewChild("fileDropRef", { static: false }) fileDropEl?: ElementRef;
 
   @Input() small = false
-  @Output() fileUpload: EventEmitter<File> = new EventEmitter<File>()
+  @Output() fileContent: EventEmitter<string> = new EventEmitter<string>()
 
   /**
    * Convert Event to file
@@ -19,7 +19,17 @@ export class UploadFileComponent {
   fileBrowseHandler(uploadFile: Event) {
     const file = (<any>uploadFile.target)?.files?.[0]
     if (file) {
-      this.fileUpload.emit(file)
+      const reader = new FileReader()
+      reader.readAsText(file, 'UTF-8')
+      reader.onload = (e) => {
+        const fileContent = <string>e.target?.result
+
+        this.fileContent.emit(fileContent)
+      }
+      reader.onerror = (e) => {
+        // TODO: show error
+        // this.error = 'error reading file'
+      }
     }
   }
 }

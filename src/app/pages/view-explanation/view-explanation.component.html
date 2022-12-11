@@ -1,7 +1,5 @@
-<button routerLink="../">back</button>
-
 <div class="presentation" #presentation [hidden]="!file"></div>
 
-<div *ngIf="!file" #loadFIle>
-  <app-upload-file (fileUpload)="onFileUpload($event)"></app-upload-file>
+<div class="file-upload" *ngIf="!file">
+  <app-upload-file (fileContent)="onFileUpload($event)"></app-upload-file>
 </div>

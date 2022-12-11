@@ -2,8 +2,8 @@
 
 :host {
   position: relative;
+  height: calc(100vh - $headerHeight);
   width: 100vw;
-  height: 100vh;
 
   .editor-options {
     position: fixed;
@@ -11,9 +11,8 @@
     display: flex;
     align-items: center;
     justify-content: space-around;
-    z-index: 1;
+    z-index: 5;
     padding: 5px;
-
   }
 
   button {
@@ -42,8 +41,8 @@
     background-color: $backgroundColor;
     position: fixed;
     left: 0;
-    top: 0;
+    top: $headerHeight;
+    height: calc(100vh - $headerHeight);
     width: 100vw;
-    height: 100vh;
   }
 }

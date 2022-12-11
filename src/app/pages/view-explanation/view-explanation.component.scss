@@ -1,24 +1,44 @@
+@import "../../../constants";
+
 :host {
+  height: calc(100vh - $headerHeight);
+  width: 100vw;
+
   .presentation {
     position: fixed;
     left: 0;
-    top: 0;
+    top: $headerHeight;
     width: 100vw;
-    height: 100vh;
+    height: calc(100vh - $headerHeight);
 
-    ::ng-deep .reveal.center .slides section {
-      top: 0 !important;
-      -webkit-transform: none;
-      -moz-transform: none;
-      -ms-transform: none;
-      -o-transform: none;
-      transform: none;
+    ::ng-deep .reveal.center {
+      button {
+        box-shadow: none;
+      }
 
-      -webkit-transition: none;
-      -moz-transition: none;
-      -ms-transition: none;
-      -o-transition: none;
-      transition: none;
+      .slides section {
+        top: 0 !important;
+        -webkit-transform: none;
+        -moz-transform: none;
+        -ms-transform: none;
+        -o-transform: none;
+        transform: none;
+
+        -webkit-transition: none;
+        -moz-transition: none;
+        -ms-transition: none;
+        -o-transition: none;
+        transition: none;
+      }
     }
+  }
+
+  .file-upload {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: calc(100vh - $headerHeight);
+    width: 100vw;
+    background-color: $viewColor;
   }
 }

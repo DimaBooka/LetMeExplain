@@ -1,15 +1,15 @@
 <div class="container" *ngIf="!small;else smallUpload">
   <ng-container *ngTemplateOutlet="fileInput"></ng-container>
-  <label for="fileDropRef">Browse for file</label>
+  <label class="as-button" for="fileDropRef">Upload file</label>
 </div>
 
 <ng-template #smallUpload>
   <div class="container small">
     <ng-container *ngTemplateOutlet="fileInput"></ng-container>
-    <label for="fileDropRef">upload</label>
+    <label class="as-button" for="fileDropRef">upload</label>
   </div>
 </ng-template>
 
 <ng-template #fileInput>
-  <input type="file" #fileDropRef id="fileDropRef" accept='.md' (change)="fileBrowseHandler($event)"/>
+  <input type="file" #fileDropRef id="fileDropRef" [hidden]="true" accept='.md' (change)="fileBrowseHandler($event)"/>
 </ng-template>

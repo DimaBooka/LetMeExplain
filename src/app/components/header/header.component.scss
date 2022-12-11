@@ -1,0 +1,59 @@
+@import "../../../constants";
+
+$sideWidth: 20px;
+
+:host {
+  header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 $sideWidth;
+    background-color: $headerColor;
+    border-bottom: 3px solid $textColor;
+    height: $headerHeight;
+    z-index: 10;
+
+    h1 {
+      cursor: default;
+      margin: 0;
+      user-select: none;
+      transition: all 0.7s;
+    }
+
+    .tools {
+      margin: 0;
+      user-select: none;
+      transition: all 0.5s;
+      visibility: hidden;
+      opacity: 0;
+      transform: translateX(calc(-50vw));
+    }
+
+    &.create, &.view {
+      .tools {
+        opacity: 1;
+        visibility: visible;
+      }
+    }
+
+    &.create {
+      h1 {
+        transform: translateX(calc(100vw - 241px));
+      }
+
+      .tools {
+        transform: translateX(calc(-100vw + 112px));
+      }
+    }
+
+    &.view {
+      h1 {
+        transform: translateX(calc(100vw - 241px));
+      }
+
+      .tools {
+        transform: translateX(calc(-100vw + 112px));
+      }
+    }
+  }
+}

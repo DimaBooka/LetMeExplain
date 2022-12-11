@@ -7,6 +7,7 @@ import {
   ViewChild
 } from '@angular/core'
 import { retry } from 'rxjs'
+import { SlidesService } from '../../services/slides.service'
 
 @Component({
   selector: 'app-create-explanation',
@@ -64,7 +65,7 @@ export class CreateExplanationComponent implements AfterViewInit {
   slides: { name: string, dataURL: string}[] = [{ name: 'Slide #1', dataURL: '' }]
   currentSlideIndex = 0
 
-  constructor(private cdr: ChangeDetectorRef) {}
+  constructor(private cdr: ChangeDetectorRef, private slidesService: SlidesService) {}
 
   ngAfterViewInit() {
     if (!this.editor) {
@@ -200,34 +201,8 @@ export class CreateExplanationComponent implements AfterViewInit {
     this.cdr.markForCheck()
   }
 
-  onUpload(uploadedFile: File) {
-    const reader = new FileReader()
-    reader.readAsText(uploadedFile, 'UTF-8')
-    reader.onload = (e) => {
-      const fileContent = <string>e.target?.result
-
-      try {
-        // split content to slides
-        const slides = fileContent.split('---').map((s, i) => {
-          const slide = s.replace(/\n/g,'')
-          return { name: `Slide #${i + 1}`, dataURL: slide.substring(9, slide.length - 2) }
-        })
-
-        this.slides = slides
-
-        // open first slide
-        this.drawSlide(0)
-
-      } catch (e) {
-        // show incorrect format error
-        // this.cdr.markForCheck()
-      }
-
-      this.cdr.markForCheck()
-    }
-    reader.onerror = (e) => {
-      // show incorrect format error
-      // this.cdr.markForCheck()
-    }
+  onUpload(fileContent: string) {
+    this.slidesService.uploadSlides(fileContent)
+    this.slides = this.slidesService.slides
   }
 }

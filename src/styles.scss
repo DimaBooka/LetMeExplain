@@ -1,23 +1,32 @@
 @import './constants.scss';
 
 
+* {
+  box-sizing: border-box;
+}
+
 body {
   margin: 0;
   background-color: $backgroundColor;
+  font-family: sans-serif;
 }
 
-button {
-  border: none;
-  outline: none;
-  padding: .6em 1em;
-  border-radius: 3px;
+button, .as-button {
+  font-weight: bold;
+  border: 3px solid $textColor;
+  border-radius: 5px;
+  padding: 15px 25px;
+  font-size: 22px;
+  text-transform: uppercase;
+  box-shadow: 8px 7px $textColor;
   background-color: $buttonColor;
   white-space: nowrap;
-  color: #fff;
+  color: $textColor;
+  transition: box-shadow 0.3s ease-out;
+  user-select: none;
 
-  &:hover {
-    cursor: pointer;
-    filter: brightness(95%);
+  &.primary {
+    background-color: $buttonColorPrimary;
   }
 
   &.active {
@@ -26,6 +35,17 @@ button {
 
   &.danger {
     background-color: $buttonColorWarning;
+  }
+
+  &.small {
+    font-size: 16px;
+    padding: 5px 10px;
+    box-shadow: 4px 4px $textColor;
+  }
+
+  &:hover {
+    cursor: pointer;
+    box-shadow: 0 0 $textColor;
   }
 }
 
@@ -36,6 +56,10 @@ button {
 
   button {
     margin: 0!important;
+
+    &:hover {
+      filter: brightness(95%);
+    }
 
     &:first-of-type {
       border-top-right-radius: 0;

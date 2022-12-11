@@ -1,7 +1,16 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, ViewChild } from '@angular/core'
+import {
+  AfterViewInit,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  ElementRef, OnDestroy,
+  ViewChild
+} from '@angular/core'
 
 import Reveal  from 'reveal.js'
 import RevealMarkdown  from 'reveal.js/plugin/markdown/markdown'
+import { SlidesService } from '../../services/slides.service'
+import { Slide } from '../../models/slides'
 
 
 @Component({
@@ -10,48 +19,62 @@ import RevealMarkdown  from 'reveal.js/plugin/markdown/markdown'
   styleUrls: ['./view-explanation.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ViewExplanationComponent {
+export class ViewExplanationComponent implements AfterViewInit, OnDestroy {
 
   @ViewChild('presentation') presentation?: ElementRef
 
   file?: string
-  error?: string
 
-  constructor(private cdr: ChangeDetectorRef) {}
+  constructor(private cdr: ChangeDetectorRef, private slidesService: SlidesService) {}
 
-  initReveal() {
-    Reveal.initialize({
-      plugins: [RevealMarkdown]
-    })
+  ngAfterViewInit() {
+    if (this.slidesService.slides.length) {
+      this.initPresentation()
+    }
   }
 
-  onFileUpload(file: File) {
-    this.error = undefined
+  ngOnDestroy() {
+    this.file = undefined
+    this.slidesService.slides = []
+  }
 
-    const reader = new FileReader()
-    reader.readAsText(file, 'UTF-8')
-    reader.onload = (e) => {
-      this.file = <string>e.target?.result
-
-      if (this.presentation) {
-        this.presentation.nativeElement.innerHTML = `<div class="reveal">
-          <div class="slides">
-            <section data-markdown data-separator="---">
-              <script type="text/template">${this.file}</script>
-            </section>
-          </div>
-        </div>`
-      }
-      this.cdr.detectChanges()
-
-      // setTimeout(() => {
-        this.initReveal()
-        this.cdr.markForCheck()
-      // }, 50)
+  initReveal() {
+    if ((<any>Reveal).isReady()) {
+      console.log('exists');
+      (<any>Reveal).layout();
+      (<any>Reveal).sync();
+    } else {
+      Reveal.initialize({
+        plugins: [RevealMarkdown]
+      }).then(() => {
+        (<any>Reveal).sync();
+      })
     }
-    reader.onerror = (e) => {
-      this.error = 'error reading file'
-      this.cdr.markForCheck()
+
+    this.cdr.detectChanges()
+  }
+
+  initPresentation() {
+    this.file = this.slidesService.slides.map(s => s.dataURL).map((s, i) => `${i > 0 ? '---\n' : ''}![image](${s})\n`).join('')
+    if (this.presentation) {
+      this.presentation.nativeElement.innerHTML = `<div class="reveal">
+        <div class="slides">
+          <section data-markdown data-separator="---">
+            <script type="text/template">${this.file}</script>
+          </section>
+        </div>
+      </div>`
+    }
+
+    setTimeout(() => {
+      this.initReveal()
+    }, 100)
+  }
+
+  onFileUpload(fileContent: string) {
+    this.slidesService.uploadSlides(fileContent)
+    if (this.slidesService.slides.length) {
+      this.initPresentation()
     }
   }
 }

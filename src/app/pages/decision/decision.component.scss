@@ -1,0 +1,28 @@
+@import "../../../constants";
+
+:host {
+  .decision {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+
+    height: calc(100vh - $headerHeight);
+  }
+
+  section {
+    width: 50%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &.left {
+      border-right: 3px solid $textColor;
+      background-color: $createColor;
+    }
+
+    &.right {
+      background-color: $viewColor;
+    }
+  }
+}
