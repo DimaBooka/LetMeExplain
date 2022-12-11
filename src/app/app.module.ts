@@ -6,13 +6,15 @@ import { AppComponent } from './app.component';
 import { CreateExplanationComponent } from './pages/create-explanation/create-explanation.component';
 import { ViewExplanationComponent } from './pages/view-explanation/view-explanation.component';
 import { DecisionComponent } from './pages/decision/decision.component';
+import { UploadFileComponent } from './components/upload-file/upload-file.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     CreateExplanationComponent,
     ViewExplanationComponent,
-    DecisionComponent
+    DecisionComponent,
+    UploadFileComponent
   ],
   imports: [
     BrowserModule,

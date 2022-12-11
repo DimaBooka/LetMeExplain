@@ -1,2 +1,7 @@
 <button routerLink="../">back</button>
-<p>view-explanation works!</p>
+
+<div class="presentation" #presentation [hidden]="!file"></div>
+
+<div *ngIf="!file" #loadFIle>
+  <app-upload-file (fileUpload)="onFileUpload($event)"></app-upload-file>
+</div>

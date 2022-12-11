@@ -181,11 +181,13 @@ export class CreateExplanationComponent implements AfterViewInit {
       return
     }
 
-    let data = this.editor.nativeElement.toDataURL('imag/png')
+    this.slides[this.currentSlideIndex].dataURL = this.editor.nativeElement.toDataURL('imag/png')
+
+    const data = this.slides.map(s => s.dataURL).map((s, i) => `${i > 0 ? ' \n---\n' : ''}![image](${s})\n`).join('')
 
     let a = document.createElement('a')
-    a.href = data
-    a.download = 'explanation.png'
+    a.href = 'data:text/plain;charset=utf-8,' + encodeURIComponent(data)
+    a.download = 'explanation.md'
     a.click()
 
     this.ref.markForCheck()
