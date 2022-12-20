@@ -1,6 +1,6 @@
 import { ElementRef, Injectable } from '@angular/core'
 import { Slide } from '../models/slides'
-import { BehaviorSubject, Subject } from 'rxjs'
+import { Subject } from 'rxjs'
 
 @Injectable({
   providedIn: 'root'
@@ -15,6 +15,12 @@ export class SlidesService {
   editorContext?: CanvasRenderingContext2D
 
   constructor() {}
+
+  resetSlides() {
+    this.editor = undefined
+    this.editorContext = undefined
+    this.slides = []
+  }
 
   onClear() {
     if (!this.editor) {

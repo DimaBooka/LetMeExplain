@@ -3,7 +3,7 @@
 
   <div class="tools">
 <!--    <app-drawing-tools *ngIf="onCreatePage"></app-drawing-tools>-->
-    <button class="small" routerLink="/">Back</button>
+    <button class="small" routerLink="/" (click)="onBack()">Back</button>
 
     <app-slides-tools *ngIf="onCreatePage"></app-slides-tools>
   </div>
