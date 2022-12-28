@@ -1,23 +1,32 @@
-<button (click)="slidesService.onClear()" class="danger small">Clear</button>
-
 <div class="buttons-group">
-  <button class="small" (click)="slidesService.onNextSlide()">Next</button>
+  <button class="small" (click)="slidesService.onNextSlide()">new</button>
   <button class="small" (click)="slidesService.onNextSlide(true)">empty</button>
 </div>
 
-<div class="buttons-group" *ngFor="let slide of slidesService.slides; let i = index">
+<div class="buttons-group">
   <button
-    class="small"
-    [class.active]="i === slidesService.currentSlideIndex"
-    (click)="slidesService.onChangeSlide(i)"
-  >Slide #{{ i + 1 }}</button>
+    class="small active"
+    [disabled]="slidesService.currentSlideIndex === 0"
+    (click)="slidesService.onChangeSlide(slidesService.currentSlideIndex - 1, true)"
+  ><</button>
+
+  <button (click)="slidesService.onClear()" class="small danger">clear</button>
 
   <button
-    class="small"
-    [class.active]="i === slidesService.currentSlideIndex"
-    (click)="slidesService.onRemoveSlide(i)"
+    class="small active"
+  >Slide #{{ slidesService.currentSlideIndex + 1 }}</button>
+
+  <button
+    class="small danger"
+    (click)="slidesService.onRemoveSlide(slidesService.currentSlideIndex)"
   >x</button>
+
+  <button
+    class="small active"
+    [disabled]="slidesService.slides.length - 1 === slidesService.currentSlideIndex"
+    (click)="slidesService.onChangeSlide(slidesService.currentSlideIndex + 1, true)"
+  >></button>
 </div>
 
-<button class="small active" (click)="slidesService.onDownload()">Done</button>
+<button class="small accent" (click)="slidesService.onDownload()">Done</button>
 <app-upload-file (fileContent)="slidesService.onUpload($event)" [small]="true"></app-upload-file>
