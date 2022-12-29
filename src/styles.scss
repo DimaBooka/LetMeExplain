@@ -47,6 +47,11 @@ button, .as-button {
     cursor: pointer;
     box-shadow: 0 0 $textColor;
   }
+
+  &[disabled] {
+    background-color: grey;
+    cursor: auto;
+  }
 }
 
 .buttons-group {
@@ -55,12 +60,10 @@ button, .as-button {
   justify-content: center;
 
   button {
-    &:hover {
-      //filter: brightness(95%);
-    }
+    margin-right: 10px;
 
-    &:first-of-type {
-      margin-right: 10px;
+    &:last-of-type {
+      margin-right: 0;
     }
   }
 }

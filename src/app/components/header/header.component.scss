@@ -28,10 +28,11 @@ $sideWidth: 20px;
       justify-content: center;
       margin: 0;
       user-select: none;
-      transition: all 0.5s;
+      transition: all 0.3s;
       visibility: hidden;
       opacity: 0;
-      transform: translateX(calc(-50vw));
+      transform: translateX(50vh);
+      position: absolute;
     }
 
     &.create, &.view {
@@ -47,7 +48,8 @@ $sideWidth: 20px;
       }
 
       .tools {
-        transform: translateX(calc(-43vw + 24px));
+        transition: all 0.5s;
+        transform: translateX(0px);
 
         app-slides-tools {
           margin-left: 50px;
@@ -61,7 +63,8 @@ $sideWidth: 20px;
       }
 
       .tools {
-        transform: translateX(calc(-100vw + 114px));
+        transition: all 0.5s;
+        transform: translateX(0px);
       }
     }
   }
