@@ -1,33 +1,9 @@
-<!--<div class="editor-options">-->
-<!--  <button routerLink="../">back</button>-->
-<!--  <div class="select-color" *ngFor="let color of colors"-->
-<!--       [class.active]="color === lastSelectedColor"-->
-<!--       [style.background-color]="color"-->
-<!--       (click)="onSetColor(color)"-->
-<!--  ></div>-->
-
-<!--  <button (click)="onClear()" class="danger">Clear</button>-->
-
-<!--  <div class="buttons-group">-->
-<!--    <button (click)="onNextSlide()">Next</button>-->
-<!--    <button (click)="onNextSlide(true)">empty</button>-->
-<!--  </div>-->
-
-<!--  <div class="buttons-group" *ngFor="let slide of slides; let i = index">-->
-<!--    <button-->
-<!--      [class.active]="i === currentSlideIndex"-->
-<!--      (click)="onChangeSlide(i)"-->
-<!--    >{{ slide.name }}</button>-->
-
-<!--    <button-->
-<!--      [class.active]="i === currentSlideIndex"-->
-<!--      (click)="onRemoveSlide(i)"-->
-<!--    >x</button>-->
-<!--  </div>-->
-
-<!--  <button (click)="onDownload()">Done</button>-->
-<!--  <app-upload-file (fileContent)="onUpload($event)" [small]="true"></app-upload-file>-->
-<!--</div>-->
+<app-drawing-tools
+  [selectedColor]="lastSelectedColor"
+  [selectedLineWidth]="lastSelectedLineWidth"
+  (setColor)="onSetColor($event)"
+  (setLineWidth)="onSetLineWidth($event)"
+></app-drawing-tools>
 
 <canvas #editor
   (document:mousemove)="onMouseMove($event)"

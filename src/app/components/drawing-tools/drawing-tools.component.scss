@@ -1,0 +1,51 @@
+@import "../../../constants";
+
+:host {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 6px 10px;
+
+  .select-color, .eraser {
+    width: 30px;
+    height: 30px;
+    border: 3px solid black;
+    border-radius: 20px;
+    margin: 0 5px;
+    cursor: pointer;
+    transition: all 0.3s;
+
+    &:hover, &.active {
+      width: 36px;
+      height: 36px;
+      margin: 0 2px;
+    }
+  }
+
+  .select-line-width {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    margin: 0 8px;
+    cursor: pointer;
+
+    .line-width {
+      background-color: white;
+      width: 100%;
+      transition: all 0.3s;
+    }
+
+    &:hover .line-width,
+    &.active .line-width {
+      background-color: $buttonColorActive;
+    }
+  }
+
+  .divider {
+    height: 35px;
+    width: 1px;
+    margin: 0 10px;
+  }
+}
