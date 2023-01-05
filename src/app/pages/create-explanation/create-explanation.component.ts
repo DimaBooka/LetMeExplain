@@ -31,15 +31,19 @@ export class CreateExplanationComponent implements AfterViewInit {
   prevX: number | null = null
   prevY: number | null = null
 
-  onMouseMove(e: MouseEvent) {
-    if (this.prevX == null || this.prevY == null || !this.draw) {
-      this.prevX = e.clientX
-      this.prevY = e.clientY - 58
-      return
+  onMouseMove(e: MouseEvent | TouchEvent) {
+    if (e instanceof TouchEvent ) {
+      console.log(e.touches[0].clientX)
     }
 
-    let currentX = e.clientX
-    let currentY = e.clientY - 58
+    const currentX = e instanceof TouchEvent ? e.touches[0].clientX : e.clientX
+    const currentY = (e instanceof TouchEvent ? e.touches[0].clientY : e.clientY) - 58
+
+    if (this.prevX == null || this.prevY == null || !this.draw) {
+      this.prevX = currentX
+      this.prevY = currentY
+      return
+    }
 
     this.slidesService.editorContext?.beginPath()
     this.slidesService.editorContext?.moveTo(this.prevX, this.prevY)

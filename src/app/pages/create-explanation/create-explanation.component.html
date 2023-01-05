@@ -3,10 +3,17 @@
   [selectedLineWidth]="lastSelectedLineWidth"
   (setColor)="onSetColor($event)"
   (setLineWidth)="onSetLineWidth($event)"
+  (mouseenter)="onMouseUp()"
+  (mousemove)="onMouseUp()"
+  (touchmove)="onMouseUp()"
+  (touchstart)="onMouseUp()"
 ></app-drawing-tools>
 
 <canvas #editor
-  (document:mousemove)="onMouseMove($event)"
-  (document:mousedown)="onMouseDown()"
-  (document:mouseup)="onMouseUp()"
+  (mousemove)="onMouseMove($event)"
+  (mousedown)="onMouseDown()"
+  (mouseup)="onMouseUp()"
+  (touchmove)="onMouseMove($event)"
+  (touchstart)="onMouseDown()"
+  (touchend)="onMouseUp()"
 ></canvas>

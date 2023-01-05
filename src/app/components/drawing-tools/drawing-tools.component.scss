@@ -1,10 +1,12 @@
 @import "../../../constants";
 
 :host {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 6px 10px;
+  .drawing-tools {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 6px 10px;
+  }
 
   .select-color, .eraser {
     width: 30px;

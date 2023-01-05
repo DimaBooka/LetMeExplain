@@ -1,24 +1,25 @@
-<div class="select-color" *ngFor="let color of colors"
-     [class.active]="color === selectedColor"
-     [style.background-color]="color"
-     (click)="onSetColor(color)"
-></div>
-
-<div class="divider"></div>
-
-<div class="eraser"
-     [class.active]="eraserColor === selectedColor"
-
-     (click)="setEraser()"
-></div>
-
-<div class="divider"></div>
-
-<div class="select-line-width" *ngFor="let lineWidth of lineWidths"
-     [class.active]="lineWidth === selectedLineWidth"
-     (click)="setLineWidth.emit(lineWidth)"
->
-  <div class="line-width"
-       [style.height]="lineWidth + 'px'"
+<div class="drawing-tools" (click)="stopPropagation($event)">
+  <div class="select-color" *ngFor="let color of colors"
+       [class.active]="color === selectedColor"
+       [style.background-color]="color"
+       (click)="onSetColor(color)"
   ></div>
+
+  <div class="divider"></div>
+
+  <div class="eraser"
+       [class.active]="eraserColor === selectedColor"
+       (click)="setEraser()"
+  ></div>
+
+  <div class="divider"></div>
+
+  <div class="select-line-width" *ngFor="let lineWidth of lineWidths"
+       [class.active]="lineWidth === selectedLineWidth"
+       (click)="setLineWidth.emit(lineWidth)"
+  >
+    <div class="line-width"
+         [style.height]="lineWidth + 'px'"
+    ></div>
+  </div>
 </div>

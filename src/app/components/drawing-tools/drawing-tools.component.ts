@@ -37,4 +37,11 @@ export class DrawingToolsComponent {
     this.setColor.emit(this.eraserColor)
     this.setLineWidth.emit(this.eraserLineWidth)
   }
+
+  stopPropagation(event: Event) {
+    event.stopPropagation()
+    event.preventDefault()
+    event.cancelBubble = true
+    event.stopImmediatePropagation()
+  }
 }
