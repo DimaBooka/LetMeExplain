@@ -24,7 +24,12 @@ export class CreateExplanationComponent implements AfterViewInit {
     this.draw = true
   }
 
-  onMouseUp() {
+  onMouseUp(e?: MouseEvent | TouchEvent) {
+    if (e instanceof TouchEvent ) {
+      this.prevX = null
+      this.prevY = null
+    }
+
     this.draw = false
   }
 
@@ -32,12 +37,15 @@ export class CreateExplanationComponent implements AfterViewInit {
   prevY: number | null = null
 
   onMouseMove(e: MouseEvent | TouchEvent) {
+    let offset = 195 // height fo header
+
     if (e instanceof TouchEvent ) {
-      console.log(e.touches[0].clientX)
+      console.log(e.touches[0].screenX)
+      offset = 0
     }
 
-    const currentX = e instanceof TouchEvent ? e.touches[0].clientX : e.clientX
-    const currentY = (e instanceof TouchEvent ? e.touches[0].clientY : e.clientY) - 58
+    const currentX = e instanceof TouchEvent ? e.touches[0].screenX : e.screenX
+    const currentY = (e instanceof TouchEvent ? e.touches[0].screenY : e.screenY) - offset
 
     if (this.prevX == null || this.prevY == null || !this.draw) {
       this.prevX = currentX

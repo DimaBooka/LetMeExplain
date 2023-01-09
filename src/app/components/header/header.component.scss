@@ -5,7 +5,10 @@ $sideWidth: 20px;
 :host {
   z-index: 10;
 
-  header {
+  .head {
+    position: fixed;
+    top: 0;
+    width: 100%;
     display: flex;
     align-items: center;
     justify-content: space-between;
