@@ -48,7 +48,7 @@ export class CreateExplanationComponent implements AfterViewInit {
 
     requestAnimationFrame(() => {
       const currentX = e instanceof TouchEvent ? e.touches[0].clientX : e.clientX
-      const currentY = e instanceof TouchEvent ? e.touches[0].clientY : e.clientY
+      const currentY = (e instanceof TouchEvent ? e.touches[0].clientY : e.clientY)
 
       if (this.prevX == null || this.prevY == null || !this.draw) {
         this.prevX = currentX
