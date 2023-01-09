@@ -34,6 +34,7 @@ export class SlidesService {
     if (!this.editor) {
       return
     }
+    console.log(this.slides)
 
     if (withSave) {
       // save current progress to slide
@@ -52,8 +53,10 @@ export class SlidesService {
     if (clear) {
       this.onClear()
     }
-    this.slides.push({ name: `Slide #${this.slides.length + 1}`, dataURL: '' })
-    this.currentSlideIndex = this.slides.length - 1
+
+    this.slides.splice(this.currentSlideIndex + 1, 0, { name: `Slide #${this.currentSlideIndex + 1}`, dataURL: '' })
+    this.currentSlideIndex = this.currentSlideIndex + 1
+
     this.update$.next(true)
   }
 
@@ -132,7 +135,6 @@ export class SlidesService {
       this.slides = slides
     } catch (e) {
       // show incorrect format error
-      // this.cdr.markForCheck()
     }
   }
 }

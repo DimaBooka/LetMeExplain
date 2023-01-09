@@ -95,8 +95,6 @@ export class ViewExplanationComponent implements AfterViewInit, OnDestroy {
         </body>
       </html>`
 
-      console.log(content)
-
       this.presentation.nativeElement.innerHTML = `<iframe srcdoc='${content}'></iframe>`
     }
   }
