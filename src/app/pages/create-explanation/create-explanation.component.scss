@@ -2,7 +2,7 @@
 
 :host {
   position: relative;
-  height: calc(100vh - $headerHeight);
+  height: 100vh;
   width: 100vw;
 
   app-drawing-tools {
@@ -17,8 +17,7 @@
     background-color: $backgroundColor;
     position: fixed;
     left: 0;
-    top: $headerHeight;
-    height: calc(100vh - $headerHeight);
+    height: 100vh;
     width: 100vw;
   }
 }

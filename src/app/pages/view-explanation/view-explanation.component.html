@@ -1,5 +1,7 @@
-<div class="presentation" #presentation [hidden]="!file"></div>
+<div class="view-explanation">
+  <div class="presentation" #presentation [hidden]="!file"></div>
 
-<div class="file-upload" *ngIf="!file">
-  <app-upload-file (fileContent)="onFileUpload($event)"></app-upload-file>
+  <div class="file-upload" *ngIf="!file">
+    <app-upload-file (fileContent)="onFileUpload($event)"></app-upload-file>
+  </div>
 </div>

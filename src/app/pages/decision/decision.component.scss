@@ -5,8 +5,8 @@
     display: flex;
     align-items: flex-start;
     justify-content: center;
-
-    height: calc(100vh - $headerHeight);
+    height: 100vh;
+    padding-top: $headerHeight;
   }
 
   section {

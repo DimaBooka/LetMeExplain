@@ -21,14 +21,15 @@ export class CreateExplanationComponent implements AfterViewInit {
   draw = false
 
   onMouseDown() {
+    this.prevX = null
+    this.prevY = null
+
     this.draw = true
   }
 
-  onMouseUp(e?: MouseEvent | TouchEvent) {
-    if (e instanceof TouchEvent ) {
-      this.prevX = null
-      this.prevY = null
-    }
+  onMouseUp() {
+    this.prevX = null
+    this.prevY = null
 
     this.draw = false
   }
@@ -37,30 +38,33 @@ export class CreateExplanationComponent implements AfterViewInit {
   prevY: number | null = null
 
   onMouseMove(e: MouseEvent | TouchEvent) {
-    let offset = 195 // height fo header
+    e.preventDefault()
 
-    if (e instanceof TouchEvent ) {
-      console.log(e.touches[0].screenX)
-      offset = 0
-    }
-
-    const currentX = e instanceof TouchEvent ? e.touches[0].screenX : e.screenX
-    const currentY = (e instanceof TouchEvent ? e.touches[0].screenY : e.screenY) - offset
-
-    if (this.prevX == null || this.prevY == null || !this.draw) {
-      this.prevX = currentX
-      this.prevY = currentY
+    if (!this.draw) {
+      this.prevX = null
+      this.prevY = null
       return
     }
 
-    this.slidesService.editorContext?.beginPath()
-    this.slidesService.editorContext?.moveTo(this.prevX, this.prevY)
-    this.slidesService.editorContext?.lineTo(currentX, currentY)
-    this.slidesService.editorContext?.stroke()
+    requestAnimationFrame(() => {
+      const currentX = e instanceof TouchEvent ? e.touches[0].clientX : e.clientX
+      const currentY = e instanceof TouchEvent ? e.touches[0].clientY : e.clientY
 
-    this.prevX = currentX
-    this.prevY = currentY
-    this.cdr.markForCheck()
+      if (this.prevX == null || this.prevY == null || !this.draw) {
+        this.prevX = currentX
+        this.prevY = currentY
+        return
+      }
+
+      this.slidesService.editorContext?.beginPath()
+      this.slidesService.editorContext?.moveTo(this.prevX, this.prevY)
+      this.slidesService.editorContext?.lineTo(currentX, currentY)
+      this.slidesService.editorContext?.stroke()
+
+      this.prevX = currentX
+      this.prevY = currentY
+      this.cdr.markForCheck()
+    })
   }
 
   lastSelectedColor: string = '#fff'
@@ -74,7 +78,7 @@ export class CreateExplanationComponent implements AfterViewInit {
     }
 
     this.slidesService.editor = this.editor
-    this.slidesService.editor.nativeElement.height = window.innerHeight - 58
+    this.slidesService.editor.nativeElement.height = window.innerHeight
     this.slidesService.editor.nativeElement.width = window.innerWidth
     this.slidesService.editorContext = this.editor.nativeElement.getContext('2d')
     this.slidesService.slides = [{ name: 'Slide #1', dataURL: '' }]
