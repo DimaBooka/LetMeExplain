@@ -29,12 +29,11 @@ $sideWidth: 20px;
       display: flex;
       align-items: center;
       justify-content: center;
-      margin: 0;
       user-select: none;
       transition: all 0.3s;
       visibility: hidden;
       opacity: 0;
-      transform: translateX(50vh);
+      margin: 0 0 0 50%;
       position: absolute;
     }
 
@@ -51,11 +50,21 @@ $sideWidth: 20px;
       }
 
       .tools {
+        margin: 0;
         transition: all 0.5s;
-        transform: translateX(0px);
 
         app-slides-tools {
           margin-left: 50px;
+        }
+
+        @media only screen and (max-width: 1085px) {
+          margin: -85px;
+          transform: scale(0.8);
+        }
+
+        @media only screen and (max-width: 918px) {
+          margin: -135px;
+          transform: scale(0.7);
         }
       }
     }
@@ -67,7 +76,7 @@ $sideWidth: 20px;
 
       .tools {
         transition: all 0.5s;
-        transform: translateX(0px);
+        margin: 0;
       }
     }
   }

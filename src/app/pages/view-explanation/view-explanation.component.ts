@@ -54,12 +54,11 @@ export class ViewExplanationComponent implements AfterViewInit, OnDestroy {
         <head>
 
           <style>
-          .reveal.center {
-            button {
+            .reveal.center button {
               box-shadow: none;
             }
 
-            .slides section {
+            .reveal.center .slides section {
               top: 0 !important;
               -webkit-transform: none;
               -moz-transform: none;
@@ -73,11 +72,10 @@ export class ViewExplanationComponent implements AfterViewInit, OnDestroy {
               -o-transition: none;
               transition: none;
             }
-          }
 
-          .reveal .backgrounds {
-            background-color: #2b2b2b;
-          }
+            .reveal .backgrounds {
+              background-color: #2b2b2b;
+            }
           </style>
           <link rel="stylesheet" href=\"https://cdn.jsdelivr.net/gh/hakimel/reveal.js@4.4.0/dist/reveal.css\">
           <link rel="stylesheet" href=\"https://cdn.jsdelivr.net/gh/hakimel/reveal.js@4.4.0/dist/theme/league.css\">

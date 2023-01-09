@@ -34,7 +34,6 @@ export class SlidesService {
     if (!this.editor) {
       return
     }
-    console.log(this.slides)
 
     if (withSave) {
       // save current progress to slide
@@ -56,6 +55,9 @@ export class SlidesService {
 
     this.slides.splice(this.currentSlideIndex + 1, 0, { name: `Slide #${this.currentSlideIndex + 1}`, dataURL: '' })
     this.currentSlideIndex = this.currentSlideIndex + 1
+
+    // this.slides.push({ name: `Slide #${this.slides.length + 1}`, dataURL: '' })
+    // this.currentSlideIndex = this.slides.length - 1
 
     this.update$.next(true)
   }
@@ -116,12 +118,13 @@ export class SlidesService {
 
     this.slides[this.currentSlideIndex].dataURL = this.editor.nativeElement.toDataURL('imag/png')
 
-    const data = this.slides.map(s => s.dataURL).map((s, i) => `${i > 0 ? '---\n' : ''}![image](${s})\n`).join('')
+    const data = this.slides.map(s => s.dataURL).map((s, i) => `${i > 0 ? '---\n' : ''}![image](${s})\n\n`).join('')
 
     let a = document.createElement('a')
     a.href = 'data:text/plain;charset=utf-8,' + encodeURIComponent(data)
     a.download = 'explanation.md'
     a.click()
+    a.remove()
   }
 
   parseSlides(uploadedFile: string) {
@@ -129,7 +132,9 @@ export class SlidesService {
       // split content to slides
       const slides = uploadedFile.split('---').map((s, i) => {
         const slide = s.replace(/\n/g,'')
-        return { name: `Slide #${i + 1}`, dataURL: slide.substring(9, slide.length - 2) }
+
+        const ln = slide.endsWith('==)') ? 3 : slide.endsWith('=)') ? 2 : 1
+        return { name: `Slide #${i + 1}`, dataURL: slide.substring(9, slide.length - ln) }
       })
 
       this.slides = slides
